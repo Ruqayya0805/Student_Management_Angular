@@ -1,0 +1,46 @@
+<div class="home-container">
+  <div class="header">
+    <h1>All Students</h1>
+    <p class="subtitle">Total Students: {{ students().length }}</p>
+  </div>
+
+  <div class="students-grid">
+    <div class="student-card" *ngFor="let student of students()">
+      <div class="card-header">
+        <h3>{{ student.name }}</h3>
+        <span class="gender-badge" [class.male]="student.gender === 'Male'" 
+              [class.female]="student.gender === 'Female'">
+          {{ student.gender }}
+        </span>
+      </div>
+      
+      <div class="card-body">
+        <div class="info-row">
+          <span class="label">Class:</span>
+          <span class="value">{{ student.class }}</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="label">Gender:</span>
+          <span class="value">{{ student.gender }}</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="label">Hobby:</span>
+          <span class="value" [class.no-hobby]="!student.hobby">
+            {{ student.hobby || 'No hobby' }}
+          </span>
+        </div>
+        
+        <div class="info-row">
+          <span class="label">Favorite Subject:</span>
+          <span class="value favorite">{{ student.favoriteSubject }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="students().length === 0" class="no-students">
+    <p>No students found. Please add a student.</p>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="add-student-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h1>Add New Student</h1>
+      <p>Fill in the details to add a new student</p>
+    </div>
+
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="name">Name <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name" 
+          class="form-control"
+          placeholder="Enter student name (min 5 characters)">
+        <div class="error-message" *ngIf="name?.invalid && name?.touched">
+          <span *ngIf="name?.errors?.['required']">Name is required</span>
+          <span *ngIf="name?.errors?.['minlength']">
+            Name must be at least 5 characters long
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label for="class">Class <span class="required">*</span></label>
+        <select id="class" formControlName="class" class="form-control">
+          <option value="">Select Class</option>
+          <option *ngFor="let cls of classes" [value]="cls">{{ cls }}</option>
+        </select>
+        <div class="info-message" *ngIf="selectedClass">
+          {{ getClassMessage() }}
+        </div>
+        <div class="error-message" 
+             *ngIf="studentForm.get('class')?.invalid && studentForm.get('class')?.touched">
+          Class is required
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label>Gender <span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" formControlName="gender" value="Male">
+            <span>Male</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" formControlName="gender" value="Female">
+            <span>Female</span>
+          </label>
+        </div>
+        <div class="error-message" 
+             *ngIf="studentForm.get('gender')?.invalid && studentForm.get('gender')?.touched">
+          Gender is required
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="hasHobby">
+          <span>I have a hobby</span>
+        </label>
+      </div>
+
+      
+      <div class="form-group" *ngIf="hasHobby">
+        <label for="hobby">Hobby <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="hobby" 
+          formControlName="hobby" 
+          class="form-control"
+          placeholder="Enter your hobby">
+        <div class="error-message" 
+             *ngIf="studentForm.get('hobby')?.invalid && studentForm.get('hobby')?.touched">
+          Hobby is required when 'I have a hobby' is checked
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label for="favoriteSubject">Favorite Subject</label>
+        <select id="favoriteSubject" formControlName="favoriteSubject" class="form-control">
+          <option value="">Select Subject (Optional)</option>
+          <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+        </select>
+      </div>
+
+      
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Save Student
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
